@@ -1,7 +1,11 @@
 #include <Game.h>
 
-Game::Game() : window(VideoMode(800, 600), "OpenGL")
+bool flip = false;
+int current = 1;
+
+Game::Game() : window(VideoMode(800, 600), "OpenGL"), primatives(2)
 {
+	index = glGenLists(primatives);
 }
 
 Game::~Game() {}
@@ -36,13 +40,44 @@ void Game::initialize()
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(47.0, window.getSize().x / 
-		window.getSize().y, 1.0, 500.0);
+	gluPerspective(43.0, window.getSize().x / 
+		window.getSize().y, 3.0, 500.0);
 	glMatrixMode(GL_MODELVIEW);
 }
 
 void Game::update()
 {
+	 // Uncomment for Part 2
+	 // ********************
+	elapsed = clock.getElapsedTime();
+
+	if (elapsed.asSeconds() >= 1.0f)
+	{
+		clock.restart();
+
+		if (!flip)
+		{
+			flip = true;
+			current++;
+			if (current > primatives)
+			{
+				current = 1;
+			}
+		}
+		else
+			flip = false;
+	}
+
+	if (flip)
+	{
+		rotationAngle += 0.005f;
+
+		if (rotationAngle > 360.0f)
+		{
+			rotationAngle -= 360.0f;
+		}
+	}
+	 // ********************
 	cout << "Update up" << endl;
 }
 
@@ -52,97 +87,97 @@ void Game::draw()
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glBegin(GL_POINTS); {
-	glVertex3f(0.0, 2.0, -7.0);
+	glVertex3f(-1.7, 1.7, -5.0);
 	}
 	glEnd();
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 	glBegin(GL_LINES); {
-	glVertex3f(0.0, 2.0, -7.0);
-	glVertex3f(-2.0, -2.0, -7.0);
+	glVertex3f(-1.6, 1.7, -5.0);
+	glVertex3f(-1.2, 1.3, -5.0);
 	}
 	glEnd();
 
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 	glBegin(GL_LINE_STRIP); {
-	glVertex3f(0.0, 2.0, -7.0);
-	glVertex3f(-2.0, -2.0, -7.0);
-	glVertex3f(2.0, -2.0, -7.0);
-	glVertex3f(2.0, -2.0, -7.0);
+	glVertex3f(-1.2, 1.7, -5.0);
+	glVertex3f(-0.7, 1.3, -5.0);
+	glVertex3f(-0.7, 1.7, -5.0);
 	}
 	glEnd();
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 	glBegin(GL_LINE_LOOP); {
-	glVertex3f(0.0, 2.0, -7.0);
-	glVertex3f(-2.0, -2.0, -7.0);
-	glVertex3f(2.0, -2.0, -7.0);
-	glVertex3f(2.0, -2.0, -7.0);
+	glVertex3f(-0.65, 1.7, -5.0);
+	glVertex3f(-0.2, 1.3, -5.0);
+	glVertex3f(0.2,1.3, -5.0);
+	glVertex3f(-0.2, 1.7, -5.0);
 	}
 	glEnd();
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
 	glBegin(GL_TRIANGLES); { 
-		glVertex3f(0.0, 2.0, -6.0); 
-		glVertex3f(-2.0, -2.0, -6.0); 
-		glVertex3f(2.0, -2.0, -6.0); 
+	glVertex3f(0.1, 1.7, -5.0);
+	glVertex3f(0.5, 1.3, -5.0);
+	glVertex3f(0.5, 1.7, -5.0);
 	} 
 	glEnd(); 
 	
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 	glBegin(GL_TRIANGLE_STRIP); {
-		glVertex3f(0.0, 2.0, -6.0);
-		glVertex3f(-1.0, -1.0, -6.0);
-		glVertex3f(1.0, -1.0, -6.0);
-		glVertex3f(1.5, -2.5, -6.0);
+	glVertex3f(0.6, 1.7, -5.0);
+	glVertex3f(0.9, 1.3, -5.0);
+	glVertex3f(0.9, 1.7, -5.0);
+	glVertex3f(1.3, 1.3, -5.0);
 	}
 	glEnd();
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 	glBegin(GL_TRIANGLE_FAN); {
-	glVertex3f(0.0, 2.0, -6.0);
-		glVertex3f(-1.0, -1.0, -6.0);
-		glVertex3f(1.0, -1.0, -6.0);
-		glVertex3f(1.5, -2.5, -6.0);
-		glVertex3f(2.5, 2.5, -6.0);
+	glVertex3f(-1.6, 1.2, -5.0);
+	glVertex3f(-1.0, 0.8, -5.0);
+	glVertex3f(-1.3, 0.8, -5.0);
+	glVertex3f(-1.3, 1.2, -5.0);
 	}
 	glEnd();
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 	glBegin(GL_QUADS); {
-	glVertex3f(0.0, 1.0, -7.5);
-	glVertex3f(-2.0, -2.0, -7.5);
-	glVertex3f(2.0, -2.0, -7.5);
-	glVertex3f(2.0, 2.0, -7.5);
+	glVertex3f(-0.9, 1.2, -5.0);
+	glVertex3f(-0.6, 1.2, -5.0);
+	glVertex3f(-0.3, 0.8, -5.0);
+	glVertex3f(-0.6, 0.8, -5.0);
+	
 	}
 	glEnd();
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 	glBegin(GL_QUAD_STRIP); {
-	glVertex3f(0.0, 1.0, -7.5);
-	glVertex3f(-2.0, -2.0, -7.5);
-	glVertex3f(2.0, -2.0, -7.5);
-	glVertex3f(2.0, 2.0, -7.5);
-	glVertex3f(0.0, 2.0, -7.5);
-	glVertex3f(-2.0, -2.0, -7.5);
+	glVertex3f(-0.2, 1.2, -5.0);
+	glVertex3f(0.1, 1.2, -5.0);
+	glVertex3f(0.4, 0.8, -5.0);
+	glVertex3f(0.1, 0.8, -5.0);
+	glVertex3f(0.4, 0.4, -5.0);
+	glVertex3f(0.1, 0.4, -5.0);
 	}
 	glEnd();
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 	glBegin(GL_POLYGON); {
-	glVertex3f(0.0, 1.0, -7.5);
-	glVertex3f(-2.0, -2.0, -7.5);
-	glVertex3f(2.0, -2.0, -7.5);
-	glVertex3f(2.0, 2.0, -7.5);
-	glVertex3f(1.0, 0.0, -7.5);
-	glVertex3f(-1.0, 0.0, -7.5);
-	glVertex3f(1.0, 1.0, -7.5);
-	glVertex3f(-1.0, -1.0, -7.5);
-	glVertex3f(0.5, 0.5, -7.5);
+	glVertex3f(0.5, 0.9, -5.0);
+	glVertex3f(0.8, 0.9, -5.0);
+	glVertex3f(1.1, 0.5, -5.0);
+	glVertex3f(0.8, 0.5, -5.0);
+	glVertex3f(1.1, 0.1, -5.0);
+	glVertex3f(0.8, 0.1, -5.0);
+	glVertex3f(1.1, -0.5, -5.0);
+	glVertex3f(0.8, -0.5, -5.0);
+	glVertex3f(1.1, -0.9, -5.0);
 	}
 	glEnd();
-
+	cout << "Drawing Primative " << current << endl;
+	glCallList(current);
+	//glRotatef(rotationAngle, 0.0f, 0.0f, 1.0f);
+	//glTranslatef(0.001f, 0.0f, 0.0f);
+	//glScalef(1.0001f, 1.0001f, 1.000f);
 	window.display();
 }
 
