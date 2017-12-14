@@ -29,6 +29,6 @@ private:
 	Clock clock;
 	Time elapsed;
 
-	float rotationAngle = 89.0f;
+	float rotationAngle = 1.0f;
 	 // ********************
 };

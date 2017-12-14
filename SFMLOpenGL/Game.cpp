@@ -70,12 +70,32 @@ void Game::update()
 
 	if (flip)
 	{
-		rotationAngle += 0.005f;
+		//rotationAngle += 0.005f;
 
 		if (rotationAngle > 360.0f)
 		{
 			rotationAngle -= 360.0f;
 		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageUp))
+	{
+		glScalef(1.0001f, 1.0001f, 1.000000001f);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	{
+		glTranslatef(0.01f, 0.0f, 0.0f);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{
+		glTranslatef(0.01f*-1, 0.0f, 0.0f);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	{
+		glRotatef(rotationAngle, 0.0f, 0.0f, 1.0f);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	{
+		glRotatef(rotationAngle*-1, 0.0f, 0.0f, 1.0f);
 	}
 	 // ********************
 	cout << "Update up" << endl;
@@ -132,10 +152,14 @@ void Game::draw()
 
 	
 	glBegin(GL_TRIANGLE_FAN); {
-	glVertex3f(-1.6, 1.2, -5.0);
-	glVertex3f(-1.0, 0.8, -5.0);
-	glVertex3f(-1.3, 0.8, -5.0);
-	glVertex3f(-1.3, 1.2, -5.0);
+	glVertex3f(-1.4, 0.6, -5.0);
+	glVertex3f(-1.7, 0.9, -5.0);
+	glVertex3f(-1.8, 0.6, -5.0);
+	glVertex3f(-1.7, 0.3, -5.0);
+	glVertex3f(-1.4, 0.15, -5.0);
+	glVertex3f(-1.1, 0.3, -5.0);
+	glVertex3f(-1.0, 0.6, -5.0);
+	glVertex3f(-1.1, 0.9, -5.0);
 	}
 	glEnd();
 
@@ -145,39 +169,35 @@ void Game::draw()
 	glVertex3f(-0.6, 1.2, -5.0);
 	glVertex3f(-0.3, 0.8, -5.0);
 	glVertex3f(-0.6, 0.8, -5.0);
-	
 	}
 	glEnd();
 
 	
 	glBegin(GL_QUAD_STRIP); {
-	glVertex3f(-0.2, 1.2, -5.0);
+	glVertex3f(-0.2, 0.8, -5.0);
+	glVertex3f(-0.1, 1.2, -5.0);
+	glVertex3f(0.2, 0.8, -5.0);
 	glVertex3f(0.1, 1.2, -5.0);
-	glVertex3f(0.4, 0.8, -5.0);
-	glVertex3f(0.1, 0.8, -5.0);
-	glVertex3f(0.4, 0.4, -5.0);
-	glVertex3f(0.1, 0.4, -5.0);
+	glVertex3f(0.5, 0.8, -5.0);
+	glVertex3f(0.6, 1.2, -5.0);
 	}
 	glEnd();
 
 	
 	glBegin(GL_POLYGON); {
-	glVertex3f(0.5, 0.9, -5.0);
-	glVertex3f(0.8, 0.9, -5.0);
-	glVertex3f(1.1, 0.5, -5.0);
-	glVertex3f(0.8, 0.5, -5.0);
-	glVertex3f(1.1, 0.1, -5.0);
-	glVertex3f(0.8, 0.1, -5.0);
-	glVertex3f(1.1, -0.5, -5.0);
-	glVertex3f(0.8, -0.5, -5.0);
-	glVertex3f(1.1, -0.9, -5.0);
+	glVertex3f(1.1, 0.9, -5.0);
+	glVertex3f(1.4, 1.1, -5.0);
+	glVertex3f(1.7, 0.9, -5.0);
+	glVertex3f(1.8, 0.6, -5.0);
+	glVertex3f(1.7, 0.3, -5.0);
+	glVertex3f(1.4, 0.15, -5.0);
+	glVertex3f(1.1, 0.3, -5.0);
+	glVertex3f(1.0, 0.6, -5.0);
 	}
 	glEnd();
 	cout << "Drawing Primative " << current << endl;
 	glCallList(current);
-	//glRotatef(rotationAngle, 0.0f, 0.0f, 1.0f);
-	//glTranslatef(0.001f, 0.0f, 0.0f);
-	//glScalef(1.0001f, 1.0001f, 1.000f);
+	
 	window.display();
 }
 
